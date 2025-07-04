@@ -8,9 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #520ffc;
-            --secondary-color: #3f0ef0;
-            --accent-color: #f8c146;
+            --primary-blue: #1a4f9e;
+            --primary-red: #d32f2f;
+            --accent-gold: #f8c146;
             --dark-color: #1a1a1a;
             --light-color: #f5f5f5;
             --text-color: #333;
@@ -47,44 +47,42 @@
         
         .btn {
             display: inline-block;
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-red) 100%);
             color: white;
             padding: 12px 28px;
             border-radius: 4px;
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
-            border: 2px solid var(--primary-color);
+            border: none;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-size: 14px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-blue) 100%);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
         }
         
         .btn:hover {
-            background-color: transparent;
-            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .btn-outline {
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-        }
-        
-        .btn-outline:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .btn-accent {
-            background-color: var(--accent-color);
-            color: var(--dark-color);
-            border-color: var(--accent-color);
-        }
-        
-        .btn-accent:hover {
-            background-color: transparent;
-            color: var(--dark-color);
+        .btn:hover::before {
+            opacity: 1;
         }
         
         .text-center {
@@ -110,7 +108,7 @@
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background-color: var(--accent-color);
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
             border-radius: 2px;
         }
         
@@ -128,18 +126,35 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 15px 0;
         }
         
-        .logo {
-            font-size: 1.8rem;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-img {
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-img img {
+            height: 100%;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--primary-blue);
             text-decoration: none;
         }
         
-        .logo span {
-            color: var(--accent-color);
+        .logo-text span {
+            color: var(--primary-red);
         }
         
         .nav-menu {
@@ -157,15 +172,34 @@
             font-weight: 500;
             transition: var(--transition);
             font-size: 1rem;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
+            transition: var(--transition);
         }
         
         .nav-menu li a:hover {
-            color: var(--primary-color);
+            color: var(--primary-blue);
+        }
+        
+        .nav-menu li a:hover::after {
+            width: 100%;
         }
         
         .hamburger {
             display: none;
             cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
         }
         
         /* Hero Section */
@@ -183,12 +217,14 @@
             font-size: 3.5rem;
             margin-bottom: 20px;
             color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         
         .hero p {
             font-size: 1.4rem;
             max-width: 800px;
             margin: 0 auto 30px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
         
         /* About Section */
@@ -213,6 +249,9 @@
             padding: 40px;
             border-radius: 10px;
             margin-top: 30px;
+            border-left: 4px solid var(--primary-blue);
+            border-right: 4px solid var(--primary-red);
+            background: linear-gradient(to right, rgba(26, 79, 158, 0.03), rgba(211, 47, 47, 0.03));
         }
         
         .vision-mission div {
@@ -220,8 +259,20 @@
         }
         
         .vision-mission h3 {
-            color: var(--primary-color);
+            color: var(--primary-blue);
             margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .vision-mission h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-red);
         }
         
         /* Core Values */
@@ -239,6 +290,8 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             text-align: center;
             transition: var(--transition);
+            border-top: 3px solid var(--primary-blue);
+            border-bottom: 3px solid var(--primary-red);
         }
         
         .value-card:hover {
@@ -248,13 +301,182 @@
         
         .value-icon {
             font-size: 3rem;
-            color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
         }
         
         .value-card h3 {
             margin-bottom: 15px;
             font-size: 1.4rem;
+        }
+        
+        /* Team Section */
+        .team-section {
+            background-color: #f5f9f5;
+        }
+        
+        .team-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .team-member {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 350px;
+            position: relative;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .member-image {
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .team-member:hover .member-image img {
+            transform: scale(1.05);
+        }
+        
+        .designation-badge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
+            color: white;
+            padding: 10px 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 0 8px 0 0;
+        }
+        
+        .member-info {
+            padding: 25px;
+        }
+        
+        .member-name {
+            font-size: 1.6rem;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+        
+        .member-title {
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-color);
+        }
+        
+        .contact-item i {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            min-width: 20px;
+        }
+        
+        .contact-item a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .contact-item a:hover {
+            color: var(--primary-blue);
+        }
+        
+        .profile-toggle {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            transition: var(--transition);
+        }
+        
+        .profile-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .profile-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            padding: 0 25px;
+            background: linear-gradient(to right, rgba(26, 79, 158, 0.03), rgba(211, 47, 47, 0.03));
+        }
+        
+        .profile-content.active {
+            max-height: 1000px;
+            padding: 25px;
+        }
+        
+        .profile-content h3 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .profile-content p {
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        
+        .skills {
+            margin-top: 15px;
+        }
+        
+        .skills h4 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+        
+        .skills ul {
+            padding-left: 20px;
+        }
+        
+        .skills li {
+            margin-bottom: 8px;
         }
         
         /* Services */
@@ -270,6 +492,8 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: var(--transition);
+            border-top: 3px solid var(--primary-blue);
+            border-bottom: 3px solid var(--primary-red);
         }
         
         .service-card:hover {
@@ -283,7 +507,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-color);
+            color: var(--primary-blue);
             font-size: 3rem;
         }
         
@@ -293,7 +517,7 @@
         
         .service-content h3 {
             margin-bottom: 15px;
-            color: var(--primary-color);
+            color: var(--primary-blue);
         }
         
         /* Strategic Plan */
@@ -307,7 +531,7 @@
             content: '';
             position: absolute;
             width: 6px;
-            background-color: var(--primary-color);
+            background: linear-gradient(to bottom, var(--primary-blue), var(--primary-red));
             top: 0;
             bottom: 0;
             left: 50%;
@@ -327,7 +551,7 @@
             width: 25px;
             height: 25px;
             background-color: white;
-            border: 4px solid var(--primary-color);
+            border: 4px solid var(--primary-blue);
             top: 15px;
             border-radius: 50%;
             z-index: 1;
@@ -343,10 +567,12 @@
         
         .left::after {
             right: -17px;
+            border-color: var(--primary-blue);
         }
         
         .right::after {
             left: -17px;
+            border-color: var(--primary-red);
         }
         
         .timeline-content {
@@ -354,10 +580,12 @@
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 3px solid var(--primary-blue);
+            border-right: 3px solid var(--primary-red);
         }
         
         .timeline-content h3 {
-            color: var(--primary-color);
+            color: var(--primary-blue);
             margin-bottom: 10px;
         }
         
@@ -373,6 +601,8 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 3px solid var(--primary-blue);
+            border-right: 3px solid var(--primary-red);
         }
         
         .contact-info p {
@@ -383,7 +613,7 @@
         
         .contact-info i {
             margin-right: 15px;
-            color: var(--primary-color);
+            color: var(--primary-blue);
             font-size: 1.2rem;
             min-width: 24px;
         }
@@ -393,6 +623,8 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 3px solid var(--primary-red);
+            border-right: 3px solid var(--primary-blue);
         }
         
         .form-group {
@@ -403,6 +635,7 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
+            color: var(--primary-blue);
         }
         
         .form-group input,
@@ -413,6 +646,14 @@
             border-radius: 4px;
             font-family: 'Roboto', sans-serif;
             font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 79, 158, 0.2);
         }
         
         .form-group textarea {
@@ -426,11 +667,14 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(135deg, var(--primary-blue), var(--primary-red)) border-box;
         }
         
         /* Footer */
         footer {
-            background-color: var(--dark-color);
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #0d2a5a 100%);
             color: white;
             padding-top: 60px;
         }
@@ -446,10 +690,22 @@
             color: white;
             margin-bottom: 20px;
             font-size: 1.4rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-red);
         }
         
         .footer-section p, .footer-section li {
-            opacity: 0.8;
+            opacity: 0.9;
         }
         
         .footer-section ul {
@@ -468,7 +724,7 @@
         
         .footer-section ul li a:hover {
             opacity: 1;
-            color: var(--accent-color);
+            color: var(--accent-gold);
         }
         
         .social-icons {
@@ -490,14 +746,16 @@
         }
         
         .social-icons a:hover {
-            background-color: var(--accent-color);
-            color: var(--dark-color);
+            background-color: var(--primary-red);
+            color: white;
+            transform: translateY(-3px);
         }
         
         .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding: 20px 0;
             text-align: center;
+            background: rgba(0, 0, 0, 0.1);
         }
         
         /* Responsive Styles */
@@ -518,19 +776,30 @@
         @media (max-width: 768px) {
             .hamburger {
                 display: block;
+            z-index: 1001;
+            position: relative;
+            color: white;
+            background: var(--primary-blue);
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 4px;
             }
             
             .nav-menu {
                 position: fixed;
-                top: 80px;
+                top: 0;
                 left: -100%;
                 flex-direction: column;
-                background-color: white;
+                background: linear-gradient(135deg, var(--primary-blue), #0d2a5a);
                 width: 100%;
+                height: 100vh;
                 text-align: center;
                 transition: 0.3s;
-                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-                padding: 20px 0;
+                padding: 100px 0;
+                z-index: 1000;
             }
             
             .nav-menu.active {
@@ -539,6 +808,15 @@
             
             .nav-menu li {
                 margin: 15px 0;
+            }
+            
+            .nav-menu li a {
+                color: white;
+                font-size: 1.2rem;
+            }
+            
+            .nav-menu li a::after {
+                background: var(--primary-red);
             }
             
             .about-content {
@@ -584,6 +862,14 @@
             .btn {
                 padding: 10px 20px;
             }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .logo-img {
+                height: 50px;
+            }
         }
     </style>
 </head>
@@ -592,10 +878,17 @@
     <header>
         <div class="container">
             <nav class="navbar">
-                <a href="index.html" class="logo">TAIG-<span>GROUP</span></a>
+                <div class="logo-container">
+                    <div class="logo-img">
+                        <!-- Company Logo -->
+                        <img src="static/logo.jpg" alt="TAIG-GROUP Logo" width="60" height="60">
+                    </div>
+                    <a href="index.html" class="logo-text">TAI-<span>GROUP</span></a>
+                </div>
                 <ul class="nav-menu">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About Us</a></li>
+                    <li><a href="#team">Our Team</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#strategic-plan">Strategic Plan</a></li>
                     <li><a href="#contact">Contact</a></li>
@@ -677,6 +970,124 @@
                     <div class="value-icon"><i class="fas fa-leaf"></i></div>
                     <h3>Sustainability</h3>
                     <p>Championing environmental stewardship and social responsibility</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Team Section -->
+    <section id="team" class="team-section">
+        <div class="container">
+            <h2 class="section-title">Our Leadership Team</h2>
+            <p class="text-center" style="max-width: 800px; margin: 0 auto 40px; font-size: 1.2rem;">
+                Meet the experienced professionals driving our engineering excellence and innovation
+            </p>
+            
+            <div class="team-container">
+                <!-- Team Member 1 -->
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Eng. Mukurasi Julius">
+                        <div class="designation-badge">Executive Director</div>
+                    </div>
+                    <div class="member-info">
+                        <h2 class="member-name">Eng. Mukurasi Julius</h2>
+                        <p class="member-title">Director of Engineering & Logistics</p>
+                        
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:mukurasijulius2@gmail.com">mukurasijulius2@gmail.com</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+256772511095">+256 772 511 095</a>
+                            </div>
+                        </div>
+                        
+                        <button class="profile-toggle">
+                            <i class="fas fa-chevron-down"></i> View Professional Profile
+                        </button>
+                    </div>
+                    
+                    <div class="profile-content">
+                        <h3>Professional Profile</h3>
+                        <p>A seasoned Mechanical Engineer and Logistics Professional with over 15 years of progressive experience in engineering operations, transport and fleet management, procurement, and logistics across both government and non-governmental organizations. Julius possesses extensive expertise in managing road construction equipment, vehicle maintenance systems, and institutional transport operations, while ensuring alignment with safety, security, and compliance standards.</p>
+                        <p>He is a Graduate Member of the Uganda Institution of Professional Engineers (MUIPE) and an active member of the Chartered Institute of Logistics and Transport International (CILT). With strong technical acumen and leadership in administrative and engineering functions, Julius has led teams in planning, budgeting, procurement coordination, and strategic asset management.</p>
+                        <p>Currently pursuing a Master's in Management Science (Logistics and Transport Management), he combines academic depth with practical knowledge gained through extensive fieldwork, short courses, and workshops, both locally and internationally. His proven ability to drive operational efficiency and team performance makes him a valuable asset in institutional logistics and engineering management.</p>
+                    </div>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Eng. Muganyizi Joshua">
+                        <div class="designation-badge">Technical Director</div>
+                    </div>
+                    <div class="member-info">
+                        <h2 class="member-name">Eng. Muganyizi Joshua</h2>
+                        <p class="member-title">Director Technical Operations</p>
+                        
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:joshuamuganyizi28@gmail.com">joshuamuganyizi28@gmail.com</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+256773571644">+256 773 571 644</a>
+                            </div>
+                        </div>
+                        
+                        <button class="profile-toggle">
+                            <i class="fas fa-chevron-down"></i> View Professional Profile
+                        </button>
+                    </div>
+                    
+                    <div class="profile-content">
+                        <h3>Professional Profile</h3>
+                        <p>Muganyizi Joshua is a highly skilled and certified mechanical professional with a strong background in welding, non-destructive testing (NDT), and robotic arm programming. His expertise encompasses a wide range of welding techniques and NDT methods, coupled with practical experience in quality management and process optimization.</p>
+                        
+                        <div class="skills">
+                            <h4>Skills and Experience:</h4>
+                            <p>Joshua's educational foundation includes a background in mechanical engineering from Lanzhou Resources & Environment Vocational-Technical University for Metallurgy. He holds a City and Guilds Level 3 Diploma in Welding and Fabrication, Engineering Principles, and Engineering Health and Safety from the United Kingdom.</p>
+                            <p>Furthermore, he possesses specialized certifications in robotic arm programming and welding from Shanghai Steps Robotics and a 3G and 6G coded welding certificate from Sunmaker Oil and Gas Institute. He is also certified in various NDT techniques, including UT, RT, MT, and PT.</p>
+                            <p>Joshua's skill set is comprehensive, covering various aspects of welding and NDT. He is proficient in robotic arm programming and welding, demonstrating competence in automated welding processes. He has experience in developing and implementing Welding and NDT Qualification Management Systems (WQMS), ensuring alignment with project-specific welding strategies. His experience also includes participation in welding and NDT process initiatives, with a focus on enhancing weld quality and optimizing production throughput.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Eng. Sanyu Justine">
+                        <div class="designation-badge">Corporate Director</div>
+                    </div>
+                    <div class="member-info">
+                        <h2 class="member-name">Eng. Sanyu Justine</h2>
+                        <p class="member-title">Director Corporate Services</p>
+                        
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:sanyujustine15@gmail.com">sanyujustine15@gmail.com</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+256789719405">+256 789 719 405</a>
+                            </div>
+                        </div>
+                        
+                        <button class="profile-toggle">
+                            <i class="fas fa-chevron-down"></i> View Professional Profile
+                        </button>
+                    </div>
+                    
+                    <div class="profile-content">
+                        <h3>Professional Profile</h3>
+                        <p>A dedicated Mechanical Technician and Instructor with over 10 years of hands-on experience in plant maintenance, machining, and mechanical manufacturing engineering. Skilled in installation, repair, and operation of mechanical systems and equipment, Justine has a strong background in training apprentices and promoting workplace safety.</p>
+                        <p>She holds City & Guilds Level 3 Diplomas in both Plant Maintenance and Manufacturing Engineering from United Kingdom, and brings a proven track record in technical instruction, machine operation, and troubleshooting. Known for her professionalism, attention to detail, and ability to work with minimal supervision, she is passionate about delivering quality workmanship and developing technical talent.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -851,6 +1262,7 @@
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">About Us</a></li>
+                        <li><a href="#team">Our Team</a></li>
                         <li><a href="#services">Services</a></li>
                         <li><a href="#strategic-plan">Strategic Plan</a></li>
                         <li><a href="#contact">Contact</a></li>
@@ -887,6 +1299,13 @@
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
+            
+            // Change icon based on state
+            if (navMenu.classList.contains('active')) {
+                hamburger.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+            }
         });
         
         // Close mobile menu when clicking a link
@@ -894,6 +1313,7 @@
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
             });
         });
         
@@ -919,7 +1339,34 @@
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
                     });
+                    
+                    // Close mobile menu if open
+                    if (navMenu.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
                 }
+            });
+        });
+        
+        // Team profile toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleButtons = document.querySelectorAll('.profile-toggle');
+            
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const profileContent = this.parentElement.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    profileContent.classList.toggle('active');
+                    
+                    if (profileContent.classList.contains('active')) {
+                        this.innerHTML = '<i class="fas fa-chevron-up"></i> Hide Profile';
+                    } else {
+                        this.innerHTML = '<i class="fas fa-chevron-down"></i> View Professional Profile';
+                    }
+                });
             });
         });
     </script>
